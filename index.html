@@ -53,21 +53,89 @@
     </div>
 
     <!-- ============================================ -->
-    <!-- MODAL DE PESQUISA -->
+    <!-- MODAL DE PESQUISA - NOVO ESTILO -->
     <!-- ============================================ -->
-    <div id="searchModal">
-        <div class="search-container">
-            <div class="search-header">
-                <i class="fas fa-search"></i>
-                <div class="search-input-wrapper">
-                    <input type="text" id="searchInput" placeholder="Pesquisar no Conecta Xexéu..." autocomplete="off">
+    <div id="searchModal" class="search-modal-full">
+        <div class="search-modal-container">
+            <!-- Header com título e botão voltar -->
+            <div class="search-modal-header">
+                <button class="search-back-btn" onclick="toggleSearch()">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>VOLTAR</span>
+                </button>
+                <div class="search-brand">
+                    <span class="brand-connecta">CONECTA</span>
+                    <span class="brand-city">Xexéu</span>
                 </div>
-                <div class="close-search" onclick="toggleSearch()">
-                    <i class="fas fa-times"></i>
+                <div style="width: 80px;"></div> <!-- Espaçador para centralizar -->
+            </div>
+
+            <!-- Campo de busca -->
+            <div class="search-input-container">
+                <div class="search-input-wrapper-full">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Busque um serviço ou informação" autocomplete="off">
                 </div>
             </div>
-            <div class="search-results" id="searchResults">
-                <!-- Resultados inseridos dinamicamente via JavaScript -->
+
+            <!-- Cards de sugestão -->
+            <div class="search-suggestions">
+                <!-- Card 1: Serviços Públicos -->
+                <div class="suggestion-card" onclick="selectSuggestion('Serviços públicos')">
+                    <div class="suggestion-icon bg-blue-50">
+                        <i class="fas fa-city text-blue-600"></i>
+                    </div>
+                    <div class="suggestion-content">
+                        <h3 class="suggestion-title">Serviços públicos e eventos da cidade</h3>
+                        <p class="suggestion-text">
+                            Você pode me perguntar como solicitar a troca de uma lâmpada queimada, o que vai rolar no final de semana ou como renovar o cadÚnico. Também posso te ajudar a encontrar informações sobre os horários de funcionamento dos serviços municipais e etc.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2: Preparação Física -->
+                <div class="suggestion-card" onclick="selectSuggestion('Preparação física')">
+                    <div class="suggestion-icon bg-green-50">
+                        <i class="fas fa-dumbbell text-green-600"></i>
+                    </div>
+                    <div class="suggestion-content">
+                        <h3 class="suggestion-title">Preparação física e dieta saudáveis</h3>
+                        <p class="suggestion-text">
+                            Me diga sua condição física e seu objetivo, que vou preparar treinos personalizados para você. Também posso indicar vídeos e receitas saudáveis. Vamos conversar?
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Turismo -->
+                <div class="suggestion-card" onclick="selectSuggestion('Turismo')">
+                    <div class="suggestion-icon bg-amber-50">
+                        <i class="fas fa-umbrella-beach text-amber-600"></i>
+                    </div>
+                    <div class="suggestion-content">
+                        <h3 class="suggestion-title">Dicas de Turismo</h3>
+                        <p class="suggestion-text">
+                            Quer saber o que fazer em Xexéu, onde comer e conhecer suas histórias fantásticas? Fala comigo que vou criar rotas incríveis para você. Vamos curtir juntos?!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 4: Oportunidades -->
+                <div class="suggestion-card" onclick="selectSuggestion('Oportunidades')">
+                    <div class="suggestion-icon bg-purple-50">
+                        <i class="fas fa-briefcase text-purple-600"></i>
+                    </div>
+                    <div class="suggestion-content">
+                        <h3 class="suggestion-title">Oportunidade de Trabalho</h3>
+                        <p class="suggestion-text">
+                            Quer saber mais sobre oportunidades de emprego, cursos e dicas profissionais em Xexéu? Estou aqui para te ajudar na sua carreira. Vamos!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resultados da pesquisa (inicialmente oculto) -->
+            <div class="search-results-container" id="searchResults" style="display: none;">
+                <!-- Resultados serão inseridos dinamicamente -->
             </div>
         </div>
     </div>
