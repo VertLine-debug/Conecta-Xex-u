@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Conecta Xexéu - Serviços da Cidade</title>
+    
+    <!-- Google Fonts + Tailwind + Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- MENU MOBILE -->
+    <!-- ============================================ -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="close-menu" id="closeMenu">
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="flex flex-col mt-4">
+            <div class="menu-item">
+                <a href="https://transparencia.xexeu.pe.gov.br" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-chart-line w-5"></i> Transparência
+                </a>
+            </div>
+            <div class="menu-item">
+                <span id="mobileNoticias">
+                    <i class="fas fa-newspaper w-5"></i> Notícias
+                </span>
+            </div>
+            <div class="menu-item">
+                <a href="https://site.xexeu.pe.gov.br/ouvidoria-municipal/" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-headset w-5"></i> Ouvidoria
+                </a>
+            </div>
+            <div class="menu-item">
+                <span id="mobilePerfil">
+                    <i class="fas fa-user-circle w-5"></i> Meu Perfil
+                </span>
+            </div>
+            <div class="menu-item">
+                <span id="mobileConfig">
+                    <i class="fas fa-cog w-5"></i> Configurações
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- MODAL DE PESQUISA - ESTILO CLEAN -->
+    <!-- ============================================ -->
+    <div id="searchModal">
+        <div class="search-modal-container">
+            <!-- Header com título e botão voltar -->
+            <div class="search-modal-header">
+                <button class="search-back-btn" onclick="toggleSearch()">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>VOLTAR</span>
+                </button>
+                <div class="search-brand">
+                    <span class="brand-connecta">CONECTA</span>
+                    <span class="brand-city">Xexéu</span>
+                </div>
+                <div style="width: 80px;"></div> <!-- Espaçador para centralizar -->
+            </div>
+
+            <!-- Campo de busca -->
+            <div class="search-input-container">
+                <div class="search-input-wrapper-full">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Busque um serviço ou informação" autocomplete="off">
+                </div>
+            </div>
+
+            <!-- Cards de sugestão -->
+            <div class="search-suggestions" id="searchSuggestions">
+                <!-- Card 1: Serviços Públicos -->
+                <div class="suggestion-card" onclick="selectSuggestion('Serviços públicos')">
+                    <div class="suggestion-icon bg-blue-50">
+                        <i class="fas fa-city text-blue-600"></i>
+                    </div>
+                    <div class="suggestion-content">
+                        <h3 class="suggestion-title">Serviços públicos e eventos da cidade</h3>
+                        <p class="suggestion-text">
+                            Você pode me perguntar como solicitar a troca de uma lâmpada queimada, o que vai rolar no final de semana ou como renovar o cadÚnico. Também posso te ajudar a encontrar informações sobre os horários de funcionamento dos serviços municipais e etc.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2: Preparação Física -->
+                <div class="suggestion-card" onclick="selectSuggestion('Preparação física')">
+                    <div class="suggestion-icon bg-green-50">
+                        <i class="fas fa-dumbbell text-green-600"></i>
+                    </div>
+                    <div class="suggestion-content">
+                        <h3 class="suggestion-title">Preparação física e dieta saudáveis</h3>
+                        <p class="suggestion-text">
+                            Me diga sua condição física e seu objetivo, que vou preparar treinos personalizados para você. Também posso indicar vídeos e receitas saudáveis. Vamos conversar?
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Turismo -->
+                <div class="suggestion-card" onclick="selectSuggestion('Turismo')">
+                    <div class="suggestion-icon bg-amber-50">
+                        <i class="fas fa-umbrella-beach text-amber-600"></i>
+                    </div>
+                    <div class="suggestion-content">
+                        <h3 class="suggestion-title">Dicas de Turismo</h3>
+                        <p class="suggestion-text">
+                            Quer saber o que fazer em Xexéu, onde comer e conhecer suas histórias fantásticas? Fala comigo que vou criar rotas incríveis para você. Vamos curtir juntos?!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 4: Oportunidades -->
+                <div class="suggestion-card" onclick="selectSuggestion('Oportunidades')">
+                    <div class="suggestion-icon bg-purple-50">
+                        <i class="fas fa-briefcase text-purple-600"></i>
+                    </div>
+                    <div class="suggestion-content">
+                        <h3 class="suggestion-title">Oportunidade de Trabalho</h3>
+                        <p class="suggestion-text">
+                            Quer saber mais sobre oportunidades de emprego, cursos e dicas profissionais em Xexéu? Estou aqui para te ajudar na sua carreira. Vamos!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resultados da pesquisa -->
+            <div class="search-results-container" id="searchResults" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- CABEÇALHO PRINCIPAL -->
+    <!-- ============================================ -->
+    <header class="fixed-header header-premium shadow-2xl border-b border-white/10">
+        <div class="container mx-auto px-6 flex items-center justify-between w-full">
+            
+            <!-- Logo -->
+            <div class="logo-wrapper">
+                <img src="https://i.ibb.co/vCSnnWhK/Black-White-Bold-Simple-Initials-Name-Logo-removebg-preview-1.png" 
+                     alt="Conecta Xexéu" 
+                     class="logo-super">
+            </div>
+            
+            <!-- Navegação Desktop + Botão Menu Mobile -->
+            <div class="flex items-center gap-4">
+                <div class="hidden lg:flex items-center gap-6 mr-6">
+                    <a href="https://transparencia.xexeu.pe.gov.br" target="_blank" rel="noopener noreferrer" class="text-white/80 hover:text-white font-medium transition-colors">Transparência</a>
+                    <a href="#" id="desktopNoticias" class="text-white/80 hover:text-white font-medium transition-colors">Notícias</a>
+                    <a href="https://site.xexeu.pe.gov.br/ouvidoria-municipal/" target="_blank" rel="noopener noreferrer" class="text-white/80 hover:text-white font-medium transition-colors">Ouvidoria</a>
+                </div>
+                <button id="menuButton" class="menu-trigger text-white bg-white/10 hover:bg-white/20 w-12 h-12 flex items-center justify-center rounded-full transition-all">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- BANNER PRINCIPAL -->
+    <!-- ============================================ -->
+    <div class="content-wrapper">
+        <section class="banner-principal">
+            <img src="https://i.ibb.co/21nSJKF3/Inscreva-se.jpg" 
+                 alt="Banner Conecta Xexéu">
+        </section>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- ============================================ -->
+    <main class="main-content px-6 py-12 mb-32">
+        
+        <!-- Seção Destaques -->
+        <section class="mb-20">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="w-2 h-10 bg-blue-600 rounded-full"></div>
+                <h2 class="text-3xl font-black text-gray-800 uppercase tracking-tighter">Destaques de Xexéu</h2>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card Carteira Estudantil -->
+                <div class="highlight-card bg-amber-50 rounded-[2.5rem] p-8 flex flex-col items-center justify-center text-center h-48 cursor-pointer group" data-service="Carteira Estudantil">
+                    <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-amber-200 transition-colors">
+                        <i class="fas fa-id-card text-3xl text-amber-600"></i>
+                    </div>
+                    <span class="font-bold text-amber-900 text-sm uppercase">Carteira Estudantil</span>
+                </div>
+                
+                <!-- Card Credpop Xexéu -->
+                <div class="highlight-card bg-sky-50 rounded-[2.5rem] p-8 flex flex-col items-center justify-center text-center h-48 cursor-pointer group" data-service="Credpop Xexéu">
+                    <div class="w-16 h-16 bg-sky-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-sky-200 transition-colors">
+                        <i class="fas fa-hand-holding-usd text-3xl text-sky-600"></i>
+                    </div>
+                    <span class="font-bold text-sky-900 text-sm uppercase">Credpop Xexéu</span>
+                </div>
+                
+                <!-- Card Academia Xexéu -->
+                <div class="highlight-card bg-indigo-50 rounded-[2.5rem] p-8 flex flex-col items-center justify-center text-center h-48 cursor-pointer group" data-service="Academia Xexéu">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-indigo-200 transition-colors">
+                        <i class="fas fa-dumbbell text-3xl text-indigo-600"></i>
+                    </div>
+                    <span class="font-bold text-indigo-900 text-sm uppercase">Academia Xexéu</span>
+                </div>
+                
+                <!-- Card Saúde Xexéu -->
+                <div class="highlight-card bg-orange-50 rounded-[2.5rem] p-8 flex flex-col items-center justify-center text-center h-48 cursor-pointer group" data-service="Saúde Xexéu">
+                    <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-orange-200 transition-colors">
+                        <i class="fas fa-laptop-medical text-3xl text-orange-600"></i>
+                    </div>
+                    <span class="font-bold text-orange-900 text-sm uppercase">Saúde Xexéu</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Serviços -->
+        <section>
+            <div class="flex items-center gap-4 mb-10">
+                <div class="w-2 h-10 bg-blue-600 rounded-full"></div>
+                <h2 class="text-3xl font-black text-gray-800 uppercase tracking-tighter">Serviços de Xexéu</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Serviço IPTU -->
+                <button class="service-btn bg-white p-6 rounded-2xl flex justify-between items-center shadow-md border border-gray-100 hover:border-blue-500 hover:shadow-lg transition-all group text-left" data-service="IPTU Xexéu">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center group-hover:bg-blue-50">
+                            <i class="fas fa-file-invoice-dollar text-gray-400 group-hover:text-blue-600"></i>
+                        </div>
+                        <span class="font-bold text-gray-700">IPTU Xexéu</span>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-300 group-hover:text-blue-500 group-hover:translate-x-2 transition-all"></i>
+                </button>
+                
+                <!-- Serviço Iluminação Pública -->
+                <button class="service-btn bg-white p-6 rounded-2xl flex justify-between items-center shadow-md border border-gray-100 hover:border-blue-500 hover:shadow-lg transition-all group text-left" data-service="Iluminação Pública">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center group-hover:bg-blue-50">
+                            <i class="fas fa-lightbulb text-gray-400 group-hover:text-blue-600"></i>
+                        </div>
+                        <span class="font-bold text-gray-700">Iluminação Pública</span>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-300 group-hover:text-blue-500 group-hover:translate-x-2 transition-all"></i>
+                </button>
+                
+                <!-- Serviço Poda e Limpeza -->
+                <button class="service-btn bg-white p-6 rounded-2xl flex justify-between items-center shadow-md border border-gray-100 hover:border-blue-500 hover:shadow-lg transition-all group text-left" data-service="Poda e Limpeza">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center group-hover:bg-blue-50">
+                            <i class="fas fa-tree text-gray-400 group-hover:text-blue-600"></i>
+                        </div>
+                        <span class="font-bold text-gray-700">Poda e Limpeza</span>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-300 group-hover:text-blue-500 group-hover:translate-x-2 transition-all"></i>
+                </button>
+                
+                <!-- Serviço Sinalização Urbana -->
+                <button class="service-btn bg-white p-6 rounded-2xl flex justify-between items-center shadow-md border border-gray-100 hover:border-blue-500 hover:shadow-lg transition-all group text-left" data-service="Sinalização Urbana">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center group-hover:bg-blue-50">
+                            <i class="fas fa-road text-gray-400 group-hover:text-blue-600"></i>
+                        </div>
+                        <span class="font-bold text-gray-700">Sinalização Urbana</span>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-300 group-hover:text-blue-500 group-hover:translate-x-2 transition-all"></i>
+                </button>
+                
+                <!-- Serviço Academia Xexéu -->
+                <button class="service-btn bg-white p-6 rounded-2xl flex justify-between items-center shadow-md border border-gray-100 hover:border-blue-500 hover:shadow-lg transition-all group text-left" data-service="Academia Xexéu">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center group-hover:bg-blue-50">
+                            <i class="fas fa-dumbbell text-gray-400 group-hover:text-blue-600"></i>
+                        </div>
+                        <span class="font-bold text-gray-700">Academia Xexéu</span>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-300 group-hover:text-blue-500 group-hover:translate-x-2 transition-all"></i>
+                </button>
+                
+                <!-- Serviço Saúde Xexéu -->
+                <button class="service-btn bg-white p-6 rounded-2xl flex justify-between items-center shadow-md border border-gray-100 hover:border-blue-500 hover:shadow-lg transition-all group text-left" data-service="Saúde Xexéu">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center group-hover:bg-blue-50">
+                            <i class="fas fa-hospital-user text-gray-400 group-hover:text-blue-600"></i>
+                        </div>
+                        <span class="font-bold text-gray-700">Saúde Xexéu</span>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-300 group-hover:text-blue-500 group-hover:translate-x-2 transition-all"></i>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============================================ -->
+    <!-- MODAL DO MAPA (TELA CHEIA SATÉLITE) -->
+    <!-- ============================================ -->
+    <div id="mapModal">
+        <div>
+            <div class="map-controls">
+                <button class="map-control-btn" onclick="toggleMap()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <iframe 
+                src="https://maps.google.com/maps?q=Xexeu%20Pernambuco&t=k&z=16&ie=UTF8&iwloc=&output=embed"
+                allowfullscreen
+                loading="lazy">
+            </iframe>
+            <div class="map-info">
+                <i class="fas fa-satellite mr-2"></i> Xexéu - PE | Vista de Satélite
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- NAVEGAÇÃO INFERIOR -->
+    <!-- ============================================ -->
+    <div class="bottom-nav-container">
+        <nav class="nav-inner bg-white/95 backdrop-blur-xl border-t border-gray-200 w-full h-22 lg:h-24 flex items-center justify-around lg:gap-12 px-6">
+            
+            <button data-tab="home" class="nav-btn flex flex-col items-center group transition-transform active:scale-95">
+                <i class="fas fa-home text-2xl text-blue-600 mb-1"></i>
+                <span class="text-[10px] font-black uppercase tracking-widest text-blue-700">Início</span>
+            </button>
+            
+            <button data-tab="events" class="nav-btn flex flex-col items-center group transition-transform active:scale-95 text-gray-400 hover:text-blue-500">
+                <i class="far fa-calendar-check text-2xl mb-1 group-hover:scale-110 transition-transform"></i>
+                <span class="text-[10px] font-black uppercase tracking-widest">Agenda</span>
+            </button>
+            
+            <div class="relative -top-6 lg:-top-8">
+                <button id="searchFab" class="w-16 h-16 lg:w-20 lg:h-20 bg-blue-600 rounded-full flex items-center justify-center text-white border-[6px] border-white shadow-2xl hover:bg-blue-700 transition-all hover:scale-105 active:scale-90 search-fab-glow">
+                    <i class="fas fa-search text-2xl lg:text-3xl"></i>
+                </button>
+            </div>
+
+            <button onclick="toggleMap()" class="nav-btn flex flex-col items-center group transition-transform active:scale-95 text-gray-400 hover:text-blue-500">
+                <i class="fas fa-map-marked-alt text-2xl mb-1 group-hover:scale-110 transition-transform"></i>
+                <span class="text-[10px] font-black uppercase tracking-widest">Mapa</span>
+            </button>
+            
+            <button data-tab="profile" class="nav-btn flex flex-col items-center group transition-transform active:scale-95 text-gray-400 hover:text-blue-500">
+                <i class="far fa-user-circle text-2xl mb-1 group-hover:scale-110 transition-transform"></i>
+                <span class="text-[10px] font-black uppercase tracking-widest">Perfil</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TOAST MESSAGE -->
+    <!-- ============================================ -->
+    <div id="toastMessage" class="toast-message">
+        🚀 Conecta Xexéu - Em breve
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
