@@ -1,0 +1,447 @@
+/* ============================================ */
+/* RESET E ESTILOS GLOBAIS */
+/* ============================================ */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #f3f4f6;
+}
+
+* {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    box-sizing: border-box;
+}
+
+/* ============================================ */
+/* HEADER PREMIUM */
+/* ============================================ */
+.header-premium {
+    background: linear-gradient(98deg, #1E3A8A 0%, #2563EB 100%);
+}
+
+.fixed-header {
+    height: 80px !important;
+    display: flex;
+    align-items: center;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    height: 80px;
+    position: relative;
+}
+
+.logo-super {
+    height: 110px !important;
+    width: auto;
+    max-width: 260px;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.3));
+    display: block;
+    position: relative;
+    top: 0;
+}
+
+@media (min-width: 1024px) {
+    .logo-super {
+        height: 150px !important;
+        max-width: 380px;
+    }
+}
+
+/* ============================================ */
+/* CARDS DE DESTAQUE */
+/* ============================================ */
+.highlight-card {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.highlight-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: rgba(255,255,255,0.5);
+}
+
+/* ============================================ */
+/* NAVEGAÇÃO INFERIOR */
+/* ============================================ */
+.bottom-nav-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    transition: all 0.3s ease;
+}
+
+@media (min-width: 1024px) {
+    .bottom-nav-container {
+        bottom: 20px;
+        display: flex;
+        justify-content: center;
+    }
+    .nav-inner {
+        width: auto !important;
+        padding: 0 40px;
+        border-radius: 100px;
+        border: 1px solid rgba(229, 231, 235, 1);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+    }
+}
+
+.search-fab-glow {
+    filter: drop-shadow(0 8px 12px rgba(37, 99, 235, 0.4));
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ============================================ */
+/* MODAL DO MAPA - TELA CHEIA SATÉLITE */
+/* ============================================ */
+#mapModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    background-color: #000;
+}
+
+#mapModal > div {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+#mapModal iframe {
+    width: 100%;
+    height: 100vh;
+    border: none;
+}
+
+.map-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    display: flex;
+    gap: 10px;
+}
+
+.map-control-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.3);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 20px;
+}
+
+.map-control-btn:hover {
+    background: rgba(37, 99, 235, 0.9);
+    transform: scale(1.1);
+}
+
+.map-info {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    z-index: 1001;
+    font-weight: bold;
+    border: 2px solid rgba(255,255,255,0.2);
+}
+
+/* ============================================ */
+/* MODAL DE PESQUISA */
+/* ============================================ */
+#searchModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 100px;
+}
+
+.search-container {
+    width: 90%;
+    max-width: 600px;
+    background: white;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.search-header {
+    background: linear-gradient(98deg, #1E3A8A 0%, #2563EB 100%);
+    padding: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.search-header i {
+    font-size: 24px;
+}
+
+.search-input-wrapper {
+    flex: 1;
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    outline: none;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    backdrop-filter: blur(10px);
+}
+
+.search-input-wrapper input::placeholder {
+    color: rgba(255,255,255,0.8);
+}
+
+.search-results {
+    max-height: 400px;
+    overflow-y: auto;
+    background: white;
+}
+
+.search-result-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.search-result-item:hover {
+    background: #f3f4f6;
+}
+
+.search-result-item i {
+    width: 24px;
+    color: #2563EB;
+}
+
+.search-result-content {
+    flex: 1;
+}
+
+.search-result-title {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.search-result-desc {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.close-search {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.close-search:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* ============================================ */
+/* MENU MOBILE */
+/* ============================================ */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    max-width: 320px;
+    height: 100%;
+    background: linear-gradient(180deg, #1E3A8A 0%, #2563EB 100%);
+    z-index: 1000;
+    transition: right 0.3s ease-in-out;
+    box-shadow: -5px 0 25px rgba(0,0,0,0.3);
+    padding-top: 80px;
+}
+
+.mobile-menu.open {
+    right: 0;
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    display: none;
+}
+
+.menu-overlay.active {
+    display: block;
+}
+
+.menu-item {
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.2s;
+}
+
+.menu-item:hover {
+    background: rgba(255,255,255,0.1);
+    padding-left: 32px;
+}
+
+.menu-item a, .menu-item span {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+}
+
+.close-menu {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.2);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+}
+
+.close-menu:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+/* ============================================ */
+/* TOAST MESSAGE */
+/* ============================================ */
+.toast-message {
+    position: fixed;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.9);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 200;
+    display: none;
+    white-space: nowrap;
+    backdrop-filter: blur(8px);
+}
+
+@media (max-width: 480px) {
+    .toast-message {
+        white-space: normal;
+        text-align: center;
+        width: 90%;
+        font-size: 12px;
+    }
+}
+
+/* ============================================ */
+/* BANNER COLADO NO HEADER */
+/* ============================================ */
+.content-wrapper {
+    padding-top: 80px;
+}
+
+.banner-principal {
+    display: block;
+    width: 100%;
+    line-height: 0;
+}
+
+.banner-principal img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* ============================================ */
+/* ANIMAÇÕES */
+/* ============================================ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
