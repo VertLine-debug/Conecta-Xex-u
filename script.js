@@ -1,4 +1,3 @@
-
 // ============================================
 // DADOS DOS SERVIÇOS PARA PESQUISA
 // ============================================
@@ -26,6 +25,7 @@ const closeMenuBtn = document.getElementById('closeMenu');
 const searchModal = document.getElementById('searchModal');
 const searchInput = document.getElementById('searchInput');
 const searchResults = document.getElementById('searchResults');
+const searchSuggestions = document.querySelector('.search-suggestions');
 const toastEl = document.getElementById('toastMessage');
 
 let toastTimeout = null;
@@ -64,18 +64,26 @@ function toggleMap() {
 }
 
 // ============================================
-// PESQUISA
+// PESQUISA - NOVO ESTILO
 // ============================================
 function toggleSearch() {
-    if (searchModal.style.display === 'flex') {
+    if (searchModal.style.display === 'block') {
         searchModal.style.display = 'none';
         document.body.style.overflow = 'auto';
+        // Reset para mostrar sugestões novamente
+        if (searchSuggestions) searchSuggestions.style.display = 'flex';
+        if (searchResults) searchResults.style.display = 'none';
+        if (searchInput) searchInput.value = '';
     } else {
-        searchModal.style.display = 'flex';
+        searchModal.style.display = 'block';
         document.body.style.overflow = 'hidden';
-        searchInput.value = '';
-        updateSearchResults('');
-        setTimeout(() => searchInput.focus(), 100);
+        // Mostrar sugestões inicialmente
+        if (searchSuggestions) searchSuggestions.style.display = 'flex';
+        if (searchResults) searchResults.style.display = 'none';
+        if (searchInput) {
+            searchInput.value = '';
+            setTimeout(() => searchInput.focus(), 100);
+        }
     }
 }
 
@@ -86,13 +94,26 @@ function updateSearchResults(query) {
         service.desc.toLowerCase().includes(query.toLowerCase())
     );
     
+    if (query.length === 0) {
+        // Mostrar sugestões, esconder resultados
+        if (searchSuggestions) searchSuggestions.style.display = 'flex';
+        if (searchResults) searchResults.style.display = 'none';
+        return;
+    }
+    
+    // Esconder sugestões, mostrar resultados
+    if (searchSuggestions) searchSuggestions.style.display = 'none';
+    if (searchResults) searchResults.style.display = 'block';
+    
     if (filtered.length === 0) {
         searchResults.innerHTML = `
-            <div class="search-result-item" style="cursor: default;">
-                <i class="fas fa-search"></i>
-                <div class="search-result-content">
-                    <div class="search-result-title">Nenhum resultado encontrado</div>
-                    <div class="search-result-desc">Tente outro termo de busca</div>
+            <div class="search-result-item-full" style="cursor: default;">
+                <div class="search-result-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="search-result-info">
+                    <div class="search-result-name">Nenhum resultado encontrado</div>
+                    <div class="search-result-category">Tente outro termo de busca</div>
                 </div>
             </div>
         `;
@@ -100,11 +121,13 @@ function updateSearchResults(query) {
     }
     
     searchResults.innerHTML = filtered.map(service => `
-        <div class="search-result-item" onclick="selectService('${service.name}')">
-            <i class="fas ${service.icon}"></i>
-            <div class="search-result-content">
-                <div class="search-result-title">${service.name}</div>
-                <div class="search-result-desc">${service.desc}</div>
+        <div class="search-result-item-full" onclick="selectService('${service.name}')">
+            <div class="search-result-icon">
+                <i class="fas ${service.icon}"></i>
+            </div>
+            <div class="search-result-info">
+                <div class="search-result-name">${service.name}</div>
+                <div class="search-result-category">${service.category} • ${service.desc}</div>
             </div>
             <i class="fas fa-chevron-right" style="color: #9ca3af;"></i>
         </div>
@@ -114,6 +137,11 @@ function updateSearchResults(query) {
 function selectService(serviceName) {
     toggleSearch();
     showToast(`🔍 ${serviceName} - Em breve disponível`);
+}
+
+function selectSuggestion(suggestionType) {
+    toggleSearch();
+    showToast(`✨ ${suggestionType} - Em breve no Conecta Xexéu`);
 }
 
 if (searchInput) {
@@ -127,7 +155,7 @@ if (searchInput) {
 // ============================================
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        if (searchModal.style.display === 'flex') {
+        if (searchModal.style.display === 'block') {
             toggleSearch();
         }
         if (document.getElementById('mapModal').style.display === 'block') {
