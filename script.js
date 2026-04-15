@@ -6,6 +6,7 @@ const servicesData = [
     { name: 'Credpop Xexéu', category: 'Destaques', icon: 'fa-hand-holding-usd', desc: 'Programa de microcrédito popular' },
     { name: 'Academia Xexéu', category: 'Destaques', icon: 'fa-dumbbell', desc: 'Academia municipal gratuita' },
     { name: 'Saúde Xexéu', category: 'Destaques', icon: 'fa-laptop-medical', desc: 'Serviços de saúde municipal' },
+    { name: 'Biblioteca', category: 'Destaques', icon: 'fa-book', desc: 'Biblioteca Municipal de Xexéu' },
     { name: 'IPTU Xexéu', category: 'Serviços', icon: 'fa-file-invoice-dollar', desc: 'Imposto Predial e Territorial Urbano' },
     { name: 'Iluminação Pública', category: 'Serviços', icon: 'fa-lightbulb', desc: 'Solicite reparos na iluminação' },
     { name: 'Poda e Limpeza', category: 'Serviços', icon: 'fa-tree', desc: 'Serviços de poda e limpeza urbana' },
@@ -111,18 +112,26 @@ function updateSearchResults(query) {
         return;
     }
     
-    searchResults.innerHTML = filtered.map(service => `
-        <div class="search-result-item-full" onclick="selectService('${service.name}')">
-            <div class="search-result-icon">
-                <i class="fas ${service.icon}"></i>
+    searchResults.innerHTML = filtered.map(service => {
+        // Verifica se é o serviço de Biblioteca para adicionar link especial
+        const isBiblioteca = service.name === 'Biblioteca';
+        const onclickAction = isBiblioteca ? 
+            `window.open('https://2696244.playcode.io/', '_blank')` : 
+            `selectService('${service.name}')`;
+        
+        return `
+            <div class="search-result-item-full" onclick="${onclickAction}">
+                <div class="search-result-icon">
+                    <i class="fas ${service.icon}"></i>
+                </div>
+                <div class="search-result-info">
+                    <div class="search-result-name">${service.name}</div>
+                    <div class="search-result-category">${service.category} • ${service.desc}</div>
+                </div>
+                <i class="fas fa-chevron-right" style="color: #9ca3af;"></i>
             </div>
-            <div class="search-result-info">
-                <div class="search-result-name">${service.name}</div>
-                <div class="search-result-category">${service.category} • ${service.desc}</div>
-            </div>
-            <i class="fas fa-chevron-right" style="color: #9ca3af;"></i>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 function selectService(serviceName) {
@@ -175,7 +184,7 @@ function showToast(message) {
 // ELEMENTOS INTERATIVOS
 // ============================================
 const interactiveElements = [
-    ...document.querySelectorAll('.highlight-card'),
+    ...document.querySelectorAll('.highlight-card:not([onclick])'),
     ...document.querySelectorAll('.service-btn'),
     ...document.querySelectorAll('.nav-btn:not([onclick])'),
     document.getElementById('mobileNoticias'),
